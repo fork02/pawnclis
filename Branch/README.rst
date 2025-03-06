@@ -62,27 +62,6 @@ Testing Procedures:
 2. Perform stress and chaos testing.
 3. Gather feedback from developers and testers.
 
-Shell Scripting in Bash/Zsh
-===========================
-For automated stability testing, shell scripts are commonly employed. Below is a sample script that checks system uptime and logs stability status:
-
-.. code-block:: sh
-
-   #!/bin/bash
-   LOG_FILE="stability.log"
-   UPTIME_THRESHOLD=86400  # 24 hours in seconds
-
-   echo "Checking system stability..." | tee -a $LOG_FILE
-
-   UPTIME=$(cat /proc/uptime | awk '{print $1}')
-   UPTIME=${UPTIME%.*}  # Convert to integer
-
-   if [ "$UPTIME" -ge "$UPTIME_THRESHOLD" ]; then
-       echo "System is stable (Uptime: $UPTIME seconds)." | tee -a $LOG_FILE
-   else
-       echo "System is unstable (Uptime: $UPTIME seconds)." | tee -a $LOG_FILE
-   fi
-
 Conclusion
 ==========
 Stability testing ensures software robustness across different environments. Proper categorization and systematic testing help maintain reliability and improve user confidence. Automating stability checks using shell scripts can further streamline the process.
