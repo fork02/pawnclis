@@ -804,7 +804,8 @@ EOF
                     mkdir -p "$PPM_EXTRACT_DIR"
                     tar -xzf "$PPM_ARCHIVE_FILE" -C "$PPM_EXTRACT_DIR" --strip-components=1
                 else
-                    echo "error: Downloaded file is not a valid ZIP or TAR.GZ archive"
+                    echo -n "$(bash_coltext_r "E: ")"
+                    echo "Downloaded file is not a valid ZIP or TAR.GZ archive"
                     rm -rf "$PPM_ARCHIVE_FILE" "$PPM_EXTRACT_DIR"
                     continue
                 fi
@@ -894,10 +895,8 @@ EOF
                     echo -n "$(bash_coltext_y "info: ")"
                     echo "No 'plugins' entry found in server.cfg"
                 fi
-            else
-                echo "error: server.cfg not found!"
             fi
-
+            
             echo -n "$(bash_coltext_y "[OK] ")"
             echo "Removal process completed!"
             echo 
@@ -1293,7 +1292,8 @@ function bash_send_samp()
 
         echo -e "\nDownloading: $DOWNLOAD_URL_CURL -> $DOWNLOAD_FILE_CURL"
         if ! curl -L --progress-bar -o "$DOWNLOAD_FILE_CURL" "$DOWNLOAD_URL_CURL"; then
-            echo "failed: Failed to download the file.."
+            echo -n "$(bash_coltext_r "fail: ")"
+            echo "Failed to download the file.."
             
             if [ $BASH_SEND_SAMP_STATUS == 1 ]; then
                 bash_servers
@@ -1385,7 +1385,8 @@ function bash_send_compiler()
 
         echo -e "\nDownloading: $DOWNLOAD_URL_CURL -> $DOWNLOAD_FILE_CURL"
         if ! curl -L --progress-bar -o "$DOWNLOAD_FILE_CURL" "$DOWNLOAD_URL_CURL"; then
-            echo "failed: Failed to download the file.."
+            echo -n "$(bash_coltext_r "fail: ")"
+            echo "Failed to download the file.."
 
             if [ $BASH_SEND_PAWNCC_STATUS == 1 ]; then
                 bash_compilers
@@ -1452,7 +1453,8 @@ function bash_send_samp2()
 
         echo -e "\nDownloading: $DOWNLOAD_URL_CURL -> $DOWNLOAD_FILE_CURL"
         if ! curl -L --progress-bar -o "$DOWNLOAD_FILE_CURL" "$DOWNLOAD_URL_CURL"; then
-            echo "failed: Failed to download the file.."
+            echo -n "$(bash_coltext_r "fail: ")"
+            echo "Failed to download the file.."
 
             if [ $BASH_SEND_SAMP_STATUS == 1 ]; then
                 bash_servers
@@ -1544,7 +1546,8 @@ function bash_send_compiler2()
 
         echo -e "\nDownloading: $DOWNLOAD_URL_CURL -> $DOWNLOAD_FILE_CURL"
         if ! curl -L --progress-bar -o "$DOWNLOAD_FILE_CURL" "$DOWNLOAD_URL_CURL"; then
-            echo "failed: Failed to download the file.."
+            echo -n "$(bash_coltext_r "fail: ")"
+            echo "Failed to download the file.."
 
             if [ $BASH_SEND_PAWNCC_STATUS == 1 ]; then
                 bash_compilers
