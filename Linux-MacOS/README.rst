@@ -1,3 +1,12 @@
+.. _linux_pawncc_install:
+
+########################
+ Installing PawnCC on Linux & macOS
+########################
+
+.. contents:: Table of Contents
+   :depth: 2
+
 Linux
 =====
 Before Step, Download this:
@@ -130,3 +139,4 @@ Check again:
 .. code-block:: shell
 
     otool -L /usr/lib/libpawnc.dylib
+
