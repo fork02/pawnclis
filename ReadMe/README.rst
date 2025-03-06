@@ -32,10 +32,10 @@ This file should contain the necessary configuration settings. Below is an examp
         "ppm_subdir": "include",
         "ppm_type": "urllib3",
 
-        "chatbot_token": "",
-        "chatbot_model": "",
-        "chatbot_biodata": "",
-        "chatbot_json_get": ""
+        "chatbot_token": "123456abcde",
+        "chatbot_model": "qwen-2.5-32b",
+        "chatbot_biodata": "You is A.I with name zebras",
+        "chatbot_json_get": "python3"
     }
 
 Configuration Details
