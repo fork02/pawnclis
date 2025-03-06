@@ -34,7 +34,7 @@ Before Step, Download this:
     sudo yum install glibc.i686 libstdc++.i686
 
 After that, Just Download `PawnCC <https://github.com/pawn-lang/compiler/releases>`_
-====================================================================================
+=====================================================================
 
 Extract and install all files from the "bin" folder into your main compilation directory.
 
