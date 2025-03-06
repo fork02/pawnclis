@@ -591,7 +591,21 @@ EOF
                 echo -n "$(bash_coltext_y "info: ")"
                 echo "Downloading: $PPM_ARCHIVE_URL..."
 
-if [ "$PPM_INSTALLER" == "urllib3" ]; then
+if [ "$PPM_INSTALLER" == "curl" ]; then
+    curl -sL "$PPM_ARCHIVE_URL" -o "$PPM_ARCHIVE_FILE"
+elif [ "$PPM_INSTALLER" == "pycurl" ]; then
+    python3 -c "
+import pycurl
+
+with open('$PPM_ARCHIVE_FILE', 'wb') as f:
+    c = pycurl.Curl()
+    c.setopt(c.URL, '$PPM_ARCHIVE_URL')
+    c.setopt(c.WRITEDATA, f)
+    c.setopt(c.FOLLOWLOCATION, True)
+    c.perform()
+    c.close()
+"
+elif [ "$PPM_INSTALLER" == "urllib3" ]; then
     python3 -c "
 import urllib3
 
@@ -611,20 +625,6 @@ r = requests.get('$PPM_ARCHIVE_URL', stream=True)
 
 with open('$PPM_ARCHIVE_FILE', 'wb') as f:
     [f.write(chunk) for chunk in r.iter_content(1024)]
-"
-elif [ "$PPM_INSTALLER" == "curl" ]; then
-    curl -sL "$PPM_ARCHIVE_URL" -o "$PPM_ARCHIVE_FILE"
-elif [ "$PPM_INSTALLER" == "pycurl" ]; then
-    python3 -c "
-import pycurl
-
-with open('$PPM_ARCHIVE_FILE', 'wb') as f:
-    c = pycurl.Curl()
-    c.setopt(c.URL, '$PPM_ARCHIVE_URL')
-    c.setopt(c.WRITEDATA, f)
-    c.setopt(c.FOLLOWLOCATION, True)
-    c.perform()
-    c.close()
 "
 fi
 
@@ -754,7 +754,7 @@ EOF
             for PPM_REPOSITORY_URL in $PPM_URLS; do
                 echo -n "$(bash_coltext_y "info: ")"
                 echo "Processing repository: $PPM_REPOSITORY_URL..."
-                
+
                 if [[ "$PPM_REPOSITORY_URL" != https://* ]]; then
                     if [[ "$PPM_REPOSITORY_URL" == github/* ]]; then
                         PPM_REPOSITORY_URL="https://github.com/${PPM_REPOSITORY_URL#github/}"
@@ -814,14 +814,43 @@ EOF
 
                 echo -n "$(bash_coltext_y "info: ")"
                 echo "Downloading: $PPM_ARCHIVE_URL..."
-                
-                if [ "$PPM_INSTALLER" == "urllib3" ]; then
-                    python3 -c "import urllib3; http=urllib3.PoolManager(); r=http.request('GET', '$PPM_ARCHIVE_URL', preload_content=False); f=open('$PPM_ARCHIVE_FILE', 'wb'); [f.write(chunk) for chunk in r.stream(1024)]; f.close(); r.release_conn()"
-                elif [ "$PPM_INSTALLER" == "requests" ]; then
-                    python3 -c "import requests; r = requests.get('$PPM_ARCHIVE_URL', stream=True); with open('$PPM_ARCHIVE_FILE', 'wb') as f: [f.write(chunk) for chunk in r.iter_content(1024)]"
-                elif [ "$PPM_INSTALLER" == "curl" ]; then
-                    curl -sL "$PPM_ARCHIVE_URL" -o "$PPM_ARCHIVE_FILE"
-                fi
+
+if [ "$PPM_INSTALLER" == "curl" ]; then
+    curl -sL "$PPM_ARCHIVE_URL" -o "$PPM_ARCHIVE_FILE"
+elif [ "$PPM_INSTALLER" == "pycurl" ]; then
+    python3 -c "
+import pycurl
+
+with open('$PPM_ARCHIVE_FILE', 'wb') as f:
+    c = pycurl.Curl()
+    c.setopt(c.URL, '$PPM_ARCHIVE_URL')
+    c.setopt(c.WRITEDATA, f)
+    c.setopt(c.FOLLOWLOCATION, True)
+    c.perform()
+    c.close()
+"
+elif [ "$PPM_INSTALLER" == "urllib3" ]; then
+    python3 -c "
+import urllib3
+
+http = urllib3.PoolManager()
+r = http.request('GET', '$PPM_ARCHIVE_URL', preload_content=False)
+
+with open('$PPM_ARCHIVE_FILE', 'wb') as f:
+    [f.write(chunk) for chunk in r.stream(1024)]
+
+r.release_conn()
+"
+elif [ "$PPM_INSTALLER" == "requests" ]; then
+    python3 -c "
+import requests
+
+r = requests.get('$PPM_ARCHIVE_URL', stream=True)
+
+with open('$PPM_ARCHIVE_FILE', 'wb') as f:
+    [f.write(chunk) for chunk in r.iter_content(1024)]
+"
+fi
 
                 if file "$PPM_ARCHIVE_FILE" | grep -q "Zip archive data"; then
                     echo "Extracting ZIP file..."
@@ -923,7 +952,7 @@ EOF
                     echo "No 'plugins' entry found in server.cfg"
                 fi
             fi
-            
+
             echo -n "$(bash_coltext_y "[OK] ")"
             echo "Removal process completed!"
             echo 
