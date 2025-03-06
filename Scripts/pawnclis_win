@@ -353,9 +353,7 @@ EOF
             BASH_TITLE="version"
             bash_title "$SHUSERS:~/ $BASH_TITLE"
 
-            echo
-            echo "~ $BASH_BUILD"
-            echo
+            echo "PawnCLIS Version: $BASH_BUILD"
             bash_end ""
             ;;
         "$BASH_OPTION -T" | "type")
