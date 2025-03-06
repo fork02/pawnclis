@@ -44,7 +44,7 @@ Configuration Details
 - **`allow_subdir`**: Defines the allowed subdirectory path for includes.
 - **`ppm_dir`** & **`ppm_subdir`**: Specifies the directory structure for package management.
 - **`ppm_type`**: Determines the package manager type (e.g., `urllib3`).
-- **`chatbot_token`**, **`chatbot_model`**, **`chatbot_biodata`**, **`chatbot_json_get`**: Reserved fields for AI-related configurations.
+- **`chatbot_token`**, **`chatbot_model`**, **`chatbot_biodata`**, **`chatbot_json_get`**: Reserved fields for AI-related configurations from `groq.com <https://groq.com/>`_
 
 Make sure this file is properly configured before running the compilation process.
 
