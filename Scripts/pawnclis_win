@@ -349,7 +349,7 @@ EOF
                 bash_end ""
             fi
             ;;
-        "$BASH_OPTION -v" | "version")
+        "$BASH_OPTION -v" | "$BASH_OPTION -version" | "$BASH_OPTION --version" | "version")
             BASH_TITLE="version"
             bash_title "$SHUSERS:~/ $BASH_TITLE"
 
