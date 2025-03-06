@@ -1584,4 +1584,4 @@ function bash_send_compiler2()
     fi
 }
 
-bash_typeof "" ""
+bash_typeof ""
